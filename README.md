@@ -1,4 +1,7 @@
 # belajar_flutter
+1. Grid View
+   ![image](https://github.com/user-attachments/assets/11facc1b-7c4c-4e1d-b114-7f9332415506)
+
 
 A new Flutter project.
 
