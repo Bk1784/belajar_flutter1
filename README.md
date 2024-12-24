@@ -1,6 +1,10 @@
 # belajar_flutter
 1. Grid View
    ![image](https://github.com/user-attachments/assets/11facc1b-7c4c-4e1d-b114-7f9332415506)
+2. Dialog
+   ![image](https://github.com/user-attachments/assets/aaf3357a-9355-4b2b-b8b1-aa51c989d8d2)
+   
+
 
 
 A new Flutter project.
