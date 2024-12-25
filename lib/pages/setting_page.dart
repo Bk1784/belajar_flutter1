@@ -1,24 +1,8 @@
 import 'package:belajar_flutter/pages/page_satu.dart';
-import 'package:belajar_flutter/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class SettingPage extends StatelessWidget {
+  const SettingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +10,11 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         iconTheme:const IconThemeData(color: Colors.white),
         centerTitle: true,
+        title:const Text("Setting Page", style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.black,
-        title:const Text("Drawer", style: TextStyle(color: Colors.white),),
       ),
-    
-      drawer: Drawer( //sebagai sideabar
+      drawer: Drawer(
+        //sebagai sideabr
         child: Column(
           children: [
             Container(
@@ -41,7 +25,6 @@ class MyHomePage extends StatelessWidget {
               color:const Color.fromRGBO(58, 66, 86, 1.0),
               child:const Text(
                 "Menu Pilihan",
-                selectionColor: Colors.white,
                 style: TextStyle(fontSize: 24, color: Colors.white),
               ),
             ),
@@ -49,7 +32,7 @@ class MyHomePage extends StatelessWidget {
               height: 10,
             ),
             ListTile(
-               onTap: () {
+              onTap: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) =>const PageSatu()));
               },
@@ -65,14 +48,13 @@ class MyHomePage extends StatelessWidget {
             ListTile(
               onTap: () {
                 //bisa digunakan untuk routing
-                Navigator.of(context).pushReplacement( //pushreplacement digunakan untuk ketika berganti page maka page sebelumnya akan dihapus
-                  MaterialPageRoute(builder: (context) =>const SettingPage()),
-                );
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const SettingPage()));
               },
               leading:const Icon(Icons.settings, color: Colors.black,),
               title:const Text(
-                "Setting",
                 style: TextStyle(color: Colors.black),
+                "Setting",
               ),
             ),
           ],
