@@ -10,53 +10,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("fliexible dan expanded"),
-      ),
-      body: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              height: 100,
-              color: Colors.red,
-            
-            ),
-          ),
-          Flexible(
-            flex: 10,
-            child: Container(
-              height: 100,
-              color: Colors.blue,
+      home: Scaffold(
         
+        appBar: AppBar(title: Text("Fitted Box"),
+        
+        ),
+        body: Center(
+          child: Container(
+            color: Colors.blue,
+            width: 300,
+            height: 100,
+            child: Center(
+              child: FittedBox( //fitted box digunakan ketika menambahkan tulisan maka ukuran tulisan akan menyesuaikan dengan containernya
+                child: Text(
+                  "Halo",
+                  style: TextStyle(
+                    fontSize: 35,
+                    color: Colors.white
+                  ),
+                ),
+              ),
             ),
           ),
-          Flexible(
-            flex: 1,
-            //fit: FlexFit.tight,//mengisi semua layar yang belum terisi
-            //fit: FlexFit.loose, // menyesuaikan dengan tulisan
-            //fit: FlexFit.values[10],
-
-            child: Container(
-              
-              height: 100,
-              color: Colors.green,
-             
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
+
