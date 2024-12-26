@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+//cupertino digunakan untuk menampilkan adaptive ketika perbedaan platform
+//semisal jika platformnya android maka akan menampilkan adaptive androit
+// jika platformnya iOS maka akan menampilkan adaptive iOS
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,53 +26,48 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final widthApp = MediaQuery.of(context).size.width;
-    final heightApp = MediaQuery.of(context)
-        .size
-        .height; // heightApp ini adalah keseluruhan tinggi dari pucuk devices hingga ujung bawah
-    final paddingTop = MediaQuery.of(context).padding.top;
-
-    final myAppBar = AppBar(
-      title: Text("Layout Builder"),
-    );
-    final heightBody = heightApp - paddingTop - myAppBar.preferredSize.height;
-
     return Scaffold(
-      appBar: myAppBar,
-      body: Container(
-        width: widthApp,
-        height: heightBody * 0.3,
-        color: Color.fromRGBO(58, 66, 86, 1.0),
-        child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceEvenly, //menambah jarak samping
-          children: [
-            MyContainer(widthApp),
-            MyContainer(widthApp),
-            MyContainer(widthApp),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text("Cupertino"),
       ),
-    );
-  }
-}
+      body: Center(
+          child: ElevatedButton(
+              onPressed: () {
+                showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        color: Colors.white,
+                        child: CupertinoDatePicker(onDateTimeChanged: (datetime) {
+                          print(datetime);
+                        },
+                        initialDateTime: DateTime.now(),),
+                      );
+                    }
 
-class MyContainer extends StatelessWidget {
-  double widthApp;
-   MyContainer(this.widthApp); // menginisialisasi untuk melebarkan width app sesuai presentase
-  //setelah diinisialisasi lalu deklarasikan pada MyContainer()
+                    // ? CupertinoAlertDialog(
+                    //     title: Text("Delete Item"),
+                    //     content: Text("Are you sure to delete this item"),
+                    //     actions: [
+                    //       TextButton(
+                    //           onPressed: () {}, child: Text("Yes")),
+                    //       TextButton(onPressed: () {}, child: Text("No")),
+                    //     ],
+                    //   )
+                    // : AlertDialog(
+                    //     title: Text("Delete data"),
+                    //     content: Text("are you sure delete this data"),
+                    //     actions: [
+                    //       TextButton(
+                    //           onPressed: () {}, child: Text("Yes")),
+                    //       TextButton(onPressed: () {}, child: Text("No")),
+                    //     ],
+                    //   );
 
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      //digunakan agar height container ini mengikuti height pada scaffold yang di atas
-      builder: (context, constraints) {
-        return Container(
-          width: widthApp * 0.3,
-          height: constraints.maxHeight * 0.5, // menambahkan constraints.maxHeight
-          color: Colors.amber,
-        );
-      },
+                    );
+              },
+              child: Text('Alert'))),
     );
   }
 }
