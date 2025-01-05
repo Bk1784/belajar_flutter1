@@ -23,6 +23,10 @@ class AllProducts with ChangeNotifier {
   List<Product> get allproducts {
     return [..._allproducts];
   }
+
+  Product findByID(productId){
+    return _allproducts.firstWhere((prodid) => prodid.id == productId);
+  }
   //untuk akses semua product
 
   // void addProduct() {

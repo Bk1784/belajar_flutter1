@@ -11,19 +11,45 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productId =
-        ModalRoute.of(context)!.settings.arguments as String; // is the id!
-    // ...
-    final product = Provider.of<AllProducts>(context)
-        .allproducts
-        .firstWhere((prodid) => prodid.id == productId);
+    final productId = ModalRoute.of(context)?.settings.arguments as String?;
+    if (productId == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('No Product Found!'),
+        ),
+      );
+    }
+    final product = Provider.of<AllProducts>(context).findByID(productId);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Product Details'),
-      ),
-      body: Center(
-        child: Text("INI ADALAG PAGE PRODUK ${product.title}"),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Product Details'),
+        ),
+        body: Column(
+          children: [
+            Container(
+                width: double.infinity,
+                height: 250,
+                child: Image.network(
+                  "${product.imageUrl}",
+                  fit: BoxFit.cover,
+                )),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "${product.title}",
+              style: const TextStyle(fontSize: 24),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text("\$ ${product.price}"),
+            SizedBox(
+              height: 15,
+            ),
+            Text("${product.description}"),
+          ],
+        ));
   }
 }
