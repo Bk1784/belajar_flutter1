@@ -1,69 +1,31 @@
-import 'package:flutter/cupertino.dart';
+import 'package:belajar_flutter/providers/all_products.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import './screens/products_overview_screen.dart';
+import './screens/product_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class  MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  DateTime selectDate = DateTime.now();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Date Picker"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              selectDate.toString(),
-              style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-            ),
-            OutlinedButton(
-                onPressed: () {
-                  showDatePicker(
-                    context: context,
-                    initialDate: selectDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2050),
-                    // initialEntryMode: DatePickerEntryMode.input
-                    // initialDatePickerMode: DatePickerMode.year
-                    selectableDayPredicate: (day){
-                      if((day.isBefore(DateTime.now().subtract(Duration(days: 2))))){
-
-                      }
-                    } 
-                  ).then(
-                    (value) {
-                      if (value != null)
-                        setState(() {
-                          selectDate = value;
-                        });
-                    },
-                  );
-                },
-                child: Text("Date Picker")),
-          ],
+    return ChangeNotifierProvider(
+      create: (context) => AllProducts(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'MyShop',
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, secondary: Colors.amber),
+          fontFamily: 'Lato',
         ),
+        home: ProductsOverviewScreen(),
+        routes: {
+          ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+        },
       ),
     );
   }
