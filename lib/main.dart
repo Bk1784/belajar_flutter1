@@ -9,7 +9,7 @@ void main() {
   runApp(MyApp());
 }
 
-class  MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -19,13 +19,35 @@ class  MyApp extends StatelessWidget {
         title: 'MyShop',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, secondary: Colors.amber),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue, secondary: Colors.amber),
           fontFamily: 'Lato',
         ),
-        home: ProductsOverviewScreen(),
+        // home: ProductsOverviewScreen(),
+        home: ScreenSementara(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
         },
+      ),
+    );
+  }
+}
+
+class ScreenSementara extends StatelessWidget {
+  const ScreenSementara({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    List<Text> myList = List.generate(25, (index) => Text("${index + 1}", style: TextStyle(fontSize: 35),),);
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView(
+        children:[
+          Container(width: 100, height: 100, color: Colors.blueAccent,),
+          ...myList,
+          Container(width: 100, height: 100, color: Colors.blueAccent,),
+          ],
+      
       ),
     );
   }

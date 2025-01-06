@@ -21,7 +21,7 @@ class AllProducts with ChangeNotifier {
 
   //membuat getter
   List<Product> get allproducts {
-    return [..._allproducts];
+    return _allproducts;
   }
 
   Product findByID(productId){
