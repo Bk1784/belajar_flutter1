@@ -1,8 +1,7 @@
 import 'package:belajar_flutter/providers/all_products.dart';
+import 'package:belajar_flutter/screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
 
 void main() {
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
         ),
         // home: ProductsOverviewScreen(),
-        home: ScreenSementara(),
+        home: ProductsOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
         },
@@ -33,22 +32,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ScreenSementara extends StatelessWidget {
-  const ScreenSementara({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    List<Text> myList = List.generate(25, (index) => Text("${index + 1}", style: TextStyle(fontSize: 35),),);
-    return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        children:[
-          Container(width: 100, height: 100, color: Colors.blueAccent,),
-          ...myList,
-          Container(width: 100, height: 100, color: Colors.blueAccent,),
-          ],
-      
-      ),
-    );
-  }
-}
