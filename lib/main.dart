@@ -1,10 +1,5 @@
-import 'package:belajar_flutter/providers/all_products.dart';
-import 'package:belajar_flutter/providers/cart.dart';
-import 'package:belajar_flutter/screens/cart_screen.dart';
-import 'package:belajar_flutter/screens/products_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './screens/product_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,28 +10,64 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        //merapihkan codingan
-        ChangeNotifierProvider(create: (context) => Cart()),
-        ChangeNotifierProvider(create: (context) => AllProducts())
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'MyShop',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue, secondary: Colors.amber),
-          fontFamily: 'Lato',
-        ),
-        // home: ProductsOverviewScreen(),
-        home:const ProductsOverviewScreen(),
-        routes: {
-          ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
-          CartScreen.routName: (ctx) => const CartScreen(),
-        },
+    return MaterialApp(
+      home: ChangeNotifierProvider(
+        child:const HomeScreen(),
+        create: (context) => Counter(),
       ),
     );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final counter = Provider.of<Counter>(context, listen: false);
+    return Scaffold(
+      appBar: AppBar(
+        title:const Text("State Management"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Consumer<Counter>(
+            builder: (context, value, child) => Text(
+              value._counter.toString(),
+              style:const TextStyle(
+                fontSize: 35,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(onPressed: counter.minus, icon:const Icon(Icons.remove)),
+              IconButton(onPressed: counter.add, icon:const Icon(Icons.add))
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class Counter with ChangeNotifier {
+  int _counter = 0;
+
+  int get counter => _counter;
+
+  void add() {
+    _counter += 1;
+    notifyListeners();
+  }
+
+  void minus() {
+    _counter -= 1;
+    notifyListeners();
   }
 }
