@@ -1,3 +1,5 @@
+import 'package:belajar_flutter/models/http_provider.dart';
+import 'package:belajar_flutter/pages/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,63 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ChangeNotifierProvider(
-        child:const HomeScreen(),
-        create: (context) => Counter(),
-      ),
+      // home: HomeStateful(),
+      home: ChangeNotifierProvider(create: (context) => HttpProvider(), child:const HomeProvider(),),
     );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final counter = Provider.of<Counter>(context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        title:const Text("State Management"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Consumer<Counter>(
-            builder: (context, value, child) => Text(
-              value._counter.toString(),
-              style:const TextStyle(
-                fontSize: 35,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(onPressed: counter.minus, icon:const Icon(Icons.remove)),
-              IconButton(onPressed: counter.add, icon:const Icon(Icons.add))
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Counter with ChangeNotifier {
-  int _counter = 0;
-
-  int get counter => _counter;
-
-  void add() {
-    _counter += 1;
-    notifyListeners();
-  }
-
-  void minus() {
-    _counter -= 1;
-    notifyListeners();
   }
 }
