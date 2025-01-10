@@ -1,19 +1,21 @@
+import 'dart:math';
+
 import 'package:belajar_flutter/models/http_stateful.dart';
 import 'package:flutter/material.dart';
 
 class HomeStateful extends StatefulWidget {
-  const HomeStateful({super.key});
   @override
-   _HomeStatefulState createState() => _HomeStatefulState();
+  _HomeStatefulState createState() => _HomeStatefulState();
 }
 
 class _HomeStatefulState extends State<HomeStateful> {
-  HttpStateful? dataResponse;
+  HttpStateful dataRespon =
+      HttpStateful(id: '', fullname: '', email: '', avatar: '');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const Text("POST - STATEFUL"),
+        title: Text("GET - STATEFUL"),
       ),
       body: Container(
         width: double.infinity,
@@ -21,46 +23,39 @@ class _HomeStatefulState extends State<HomeStateful> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FittedBox(
-              child: Text(
-                (dataResponse == null || dataResponse!.id.isEmpty)
-                    ? "ID : Belum ada data"
-                    : "ID : ${dataResponse!.id}",
-                style:const TextStyle(fontSize: 20),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const FittedBox(child: Text("Name : ", style: TextStyle(fontSize: 20))),
-            FittedBox(
-              child: Text(
-                (dataResponse == null || dataResponse!.name.isEmpty)
-                    ? "Belum ada data"
-                    : "${dataResponse!.name}",
-                style:const TextStyle(
-                  fontSize: 20,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: 100,
+                width: 100,
+                child: ImageIcon(
+                  dataRespon.avatar.isEmpty ? AssetImage('assets/image/image.png') : NetworkImage(dataRespon.avatar)
                 ),
               ),
             ),
             SizedBox(height: 20),
-            FittedBox(child: Text("Job : ", style: TextStyle(fontSize: 20))),
             FittedBox(
               child: Text(
-                (dataResponse == null || dataResponse!.job.isEmpty)
-                    ? "Belum ada data"
-                    : "${dataResponse!.job}",
+                (dataRespon.id.isEmpty) ?
+                "ID : Belum ada data" : 'ID ${dataRespon.id}',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            SizedBox(height: 20),
+            FittedBox(child: Text("Name : ", style: TextStyle(fontSize: 20))),
+            FittedBox(
+              child: Text(
+                "Belum ada data",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
             ),
             SizedBox(height: 20),
-            FittedBox(
-                child: Text("Created At : ", style: TextStyle(fontSize: 20))),
+            FittedBox(child: Text("Email : ", style: TextStyle(fontSize: 20))),
             FittedBox(
               child: Text(
-                (dataResponse == null || dataResponse!.createdAt.isEmpty)
-                    ? "Belum ada data"
-                    : "${dataResponse!.createdAt}",
+                "Belum ada data",
                 style: TextStyle(
                   fontSize: 20,
                 ),
@@ -69,18 +64,15 @@ class _HomeStatefulState extends State<HomeStateful> {
             SizedBox(height: 100),
             OutlinedButton(
               onPressed: () {
-                HttpStateful.connectAPI("Bagus Kurniawan", "Developer Flutter")
-                    .then(
-                  (value) {
-                    print(value.name);
-                    setState(() {
-                      dataResponse = value;
-                    });
-                  },
-                );
+                HttpStateful.connectAPI((1 + Random().nextInt(10)).toString())
+                    .then((value) {
+                  setState(() {
+                    dataRespon = value;
+                  });
+                });
               },
               child: Text(
-                "POST DATA",
+                "GET DATA",
                 style: TextStyle(
                   fontSize: 25,
                 ),

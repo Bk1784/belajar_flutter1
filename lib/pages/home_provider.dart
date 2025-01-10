@@ -1,16 +1,16 @@
+import 'dart:math';
+
 import 'package:belajar_flutter/models/http_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeProvider extends StatelessWidget {
-  const HomeProvider({super.key});
-
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<HttpProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title:const Text("POST - PROVIDER"),
+        title: Text("GET - STATEFUL"),
       ),
       body: Container(
         width: double.infinity,
@@ -18,60 +18,63 @@ class HomeProvider extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FittedBox(
-              child: Consumer<HttpProvider>(
-                builder: (context, value, child) => Text(
-                  (value.data["id"] == null)
-                      ? "ID : Belum ada data"
-                      : "ID: ${value.data['id']}",
-                  style:const TextStyle(fontSize: 20),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Consumer<HttpProvider>(
+                  builder:(context, value, child) => Image.network(
+                    (value.data['avatar'] == null ) ?
+                    "https://www.uclg-planning.org/sites/default/files/styles/featured_home_left/public/no-user-image-square.jpg?itok=PANMBJF-"
+                    : value.data['avatar'],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            const FittedBox(child: Text("Name : ", style: TextStyle(fontSize: 20))),
+            SizedBox(height: 20),
             FittedBox(
               child: Consumer<HttpProvider>(
-                builder: (context, value, child) => Text(
-                  (value.data["name"] == null)
-                      ? "ID : Belum ada data"
-                      : "${value.data['name']}",
-                  style:const TextStyle(fontSize: 20),
+                builder: (context, value, child) =>  Text(
+                  (value.data['id'] == null) ?
+                  "ID : Belum ada data"
+                  : "ID: ${value.data['id']}",
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            const FittedBox(child: Text("Job : ", style: TextStyle(fontSize: 20))),
+            SizedBox(height: 20),
+            FittedBox(child: Text("Name : ", style: TextStyle(fontSize: 20))),
             FittedBox(
-              child: Consumer<HttpProvider>(
-                builder: (context, value, child) => Text(
-                  (value.data["job"] == null)
-                      ? "ID : Belum ada data"
-                      : "${value.data['job']}",
-                  style:const TextStyle(fontSize: 20),
+              child:  Consumer<HttpProvider>(
+                builder: (context, value, child) =>  Text(
+                  (value.data['first_name'] == null) && (value.data['last_name'] == null) ?
+                  "ID : Belum ada data"
+                  : value.data['first_name'] + ' ' + value.data['last_name'],
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            const FittedBox(
-                child: Text("Created At : ", style: TextStyle(fontSize: 20))),
+            SizedBox(height: 20),
+            FittedBox(child: Text("Email : ", style: TextStyle(fontSize: 20))),
             FittedBox(
-              child: Consumer<HttpProvider>(
-                builder: (context, value, child) => Text(
-                  (value.data["createdAt"] == null)
-                      ? "ID : Belum ada data"
-                      : "${value.data['createdAt']}",
-                  style:const TextStyle(fontSize: 20),
+              child:  Consumer<HttpProvider>(
+                builder: (context, value, child) =>  Text(
+                  (value.data['email'] == null) ?
+                  "ID : Belum ada data"
+                  : value.data['email'],
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
-            const SizedBox(height: 100),
+            SizedBox(height: 100),
             OutlinedButton(
               onPressed: () {
-                dataProvider.connectAPI("Bagus Kurniawan", "Cyber Security");
+                dataProvider.connectAPI((1 + Random().nextInt(10)).toString());
               },
-              child:const Text(
-                "POST DATA",
+              child: Text(
+                "GET DATA",
                 style: TextStyle(
                   fontSize: 25,
                 ),

@@ -1,27 +1,29 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 
 class HttpStateful {
-   String id, name, job, createdAt;
+  String id, fullname, email, avatar;
 
-  HttpStateful( //konstruktor
-      {required this.createdAt,
-      required this.id,
-      required this.job,
-      required this.name});
+  HttpStateful(
+      {required this.id,
+      required this.fullname,
+      required this.email,
+      required this.avatar});
 
-  static Future<HttpStateful> connectAPI(String name, String job) async {
-    Uri url = Uri.parse('https://reqres.in/api/users');
+  static Future<HttpStateful> connectAPI(String id) async {
+    // ignore: prefer_interpolation_to_compose_strings
+    Uri url = Uri.parse('https://reqres.in/api/users/' + id);
 
-   var hasilRespon = await http.post(url, body: {"name": name, "job": job});
+    var hasilRespon = await http.get(url);
 
-    var data = json.decode(hasilRespon.body);
+    var data = (json.decode(hasilRespon.body))['data'];
+
     return HttpStateful(
-      id: data["id"],
-      name: data["name"],
-      job: data["job"],
-      createdAt: data["createdAt"],
-    );
+        id: data['id'].toString(),
+        fullname: data['firstname'] + ' ' + data['lastname'],
+        avatar: data['avatar'],
+        email: data['email']);
   }
 }

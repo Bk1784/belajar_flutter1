@@ -1,5 +1,6 @@
 import 'package:belajar_flutter/models/http_provider.dart';
 import 'package:belajar_flutter/pages/home_provider.dart';
+import 'package:belajar_flutter/pages/home_stateful.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // home: HomeStateful(),
-      home: ChangeNotifierProvider(create: (context) => HttpProvider(), child:const HomeProvider(),),
+      home: ChangeNotifierProvider(create: (context) => HttpProvider(), child: HomeProvider(),),
     );
   }
 }
